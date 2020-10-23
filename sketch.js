@@ -1,14 +1,19 @@
+cloudSpeed = 3;
+
 function setup() {
   createCanvas(800, 800);
-  background(164, 211, 247);
-  
+  //background(164, 211, 247);
+  xpos = 10;
 }
 
 function draw() {
+  background(164, 211, 247);
   mountain(0, 450, 220, 245);
   mountain(500, 450, 220, 245);
   mountain(200, 400, 240, 255);
-  
+  clouds(xpos, 200);
+  xpos = xpos + cloudSpeed;
+
 }
 
 function mountain(x, y, shadowColor, peakColor) {
@@ -45,23 +50,24 @@ function mountain(x, y, shadowColor, peakColor) {
   endShape();
 }
 
-function clouds(cloudOpacity) {
+function clouds(cloudPos, cloudOpacity) {
+  //default of x is 10
   fill(255, 255, 255, cloudOpacity);
   stroke(255, 255, 255, cloudOpacity);
   strokeWeight(20);
   strokeJoin(ROUND);
   beginShape();
-  vertex(10, 150);
-  vertex(20, 135);
-  vertex(35, 140);
-  vertex(55, 120);
-  vertex(75, 130);
-  vertex(100, 105);
-  vertex(125, 130);
-  vertex(150, 125);
-  vertex(170, 140);
-  vertex(190, 135);
-  vertex(210, 150);
-  vertex(10, 150);
+  vertex(cloudPos, 150);
+  vertex(cloudPos + 10, 135);
+  vertex(cloudPos + 25, 140);
+  vertex(cloudPos + 45, 120);
+  vertex(cloudPos + 65, 130);
+  vertex(cloudPos + 90, 105);
+  vertex(cloudPos + 115, 130);
+  vertex(cloudPos + 140, 125);
+  vertex(cloudPos + 160, 140);
+  vertex(cloudPos + 180, 135);
+  vertex(cloudPos + 200, 150);
+  vertex(cloudPos, 150);
   endShape();
 }
