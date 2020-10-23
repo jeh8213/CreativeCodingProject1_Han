@@ -1,5 +1,7 @@
-cloudSpeed = 1;
-num = 1;
+let cloudSpeed = 1;
+let num = 1;
+let birdSpeed = 10;
+let birdDirection = 1;
 
 
 function setup() {
@@ -48,7 +50,8 @@ function draw() {
     shimmer();
     shimmer();
     shimmer();
-  
+    
+    birdMove();
   }
 }
 
@@ -116,9 +119,9 @@ function ocean() {
 }
 
 function shimmer() {
-  frameRate(8);
-  u = 505;
-  w = 350;
+  frameRate(5);
+  let u = 505;
+  let w = 350;
   while(u < 750) {
   if(w > 0) {
   fill(139, 184, 255, random(5, 30));
@@ -129,6 +132,38 @@ function shimmer() {
   }
   u += 10;
   }
+}
+
+function bird(xBird, yBird) {
+  //default for xBird and yBird is 30
+  stroke(0);
+  strokeWeight(3);
+  strokeJoin(ROUND);
+  line(xBird, yBird, xBird + 10, yBird + 10);
+  line(xBird + 10, yBird + 10, xBird, yBird + 20);
+}
+
+function birdFlock() {
+  for(let j = 30; j <= 200; j += 35) {
+    for(let i = 30; i <= j; i += 35) {
+      bird(i, j);
+    }
+  }
+}
+
+function birdMove() {
+  push();
+  translate(birdSpeed, birdDirection);
+  scale(0.8);
+  birdFlock();
+  birdSpeed += 5;
+  birdDirection += 0.8;
+  pop();
+  if(birdSpeed > 800) {
+    birdSpeed = -150;
+    birdDirection = 0;
+  }
+  
 }
 
 function mousePressed() {
