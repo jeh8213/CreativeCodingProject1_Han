@@ -1,19 +1,55 @@
-cloudSpeed = 3;
+cloudSpeed = 1;
+num = 1;
+
 
 function setup() {
   createCanvas(800, 800);
   //background(164, 211, 247);
   xpos = 10;
+  xposTwo = 400;
 }
 
 function draw() {
+  if(num == 1) {
+  frameRate(50);
   background(164, 211, 247);
-  mountain(0, 450, 220, 245);
-  mountain(500, 450, 220, 245);
-  mountain(200, 400, 240, 255);
-  clouds(xpos, 200);
+  mountain(0, 450, 220, 235);
+  mountain(500, 450, 220, 235);
+  mountain(200, 400, 235, 245);
+  fill(255, 255, 155);
+  ellipse(70, 70, 60, 60);
+  clouds(xpos, 210);
+  clouds(xposTwo, 230);
   xpos = xpos + cloudSpeed;
-
+  xposTwo = xposTwo + cloudSpeed;
+  
+  if(xpos > width) {
+    xpos = -200;
+  }
+  else if(xposTwo > width) {
+    xposTwo = -200;
+  }
+  }
+  
+  if(num == 2) {
+    //background(175, 217, 239);
+    //sky();
+    fill(175, 217, 239);
+    noStroke();
+    rect(0, 0, 800, 500);
+    fill(249, 224, 160);
+    noStroke();
+    ellipse(width/2, 500, 325, 325);
+    ocean();
+    shimmer();
+    shimmer();
+    shimmer();
+    shimmer();
+    shimmer();
+    shimmer();
+    shimmer();
+  
+  }
 }
 
 function mountain(x, y, shadowColor, peakColor) {
@@ -70,4 +106,34 @@ function clouds(cloudPos, cloudOpacity) {
   vertex(cloudPos + 200, 150);
   vertex(cloudPos, 150);
   endShape();
+}
+
+function ocean() {
+  fill(95, 140, 211);
+  noStroke();
+  rect(0, 500, 800, 300);
+  //shimmer, create randomly generated ellipses at certain locations, u increases while w decreases
+}
+
+function shimmer() {
+  frameRate(8);
+  u = 505;
+  w = 350;
+  while(u < 750) {
+  if(w > 0) {
+  fill(139, 184, 255, random(5, 30));
+  //fill(255, random(25, 50));
+  noStroke();
+  ellipse(width/2, u, random(w - 150, w + 150), 10, 175);
+  w -= 10;
+  }
+  u += 10;
+  }
+}
+
+function mousePressed() {
+  num++;
+  if (num > 2) {
+    num = 1;
+  }
 }
