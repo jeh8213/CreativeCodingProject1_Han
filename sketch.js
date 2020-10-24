@@ -3,28 +3,48 @@ let num = 1;
 let birdSpeed = 10;
 let birdDirection = 1;
 
+//Mountain objects
+let mountainOne;
+let mountainTwo;
+let mountainThree;
+//Ocean object
+let oceanView;
 
 function setup() {
   createCanvas(800, 800);
-  //background(164, 211, 247);
+  //initiate variables for clouds
   xpos = 10;
   xposTwo = 400;
+  //call objects, three mountains at different positions
+  mountainOne = new Mountain(0, 450, 220, 235);
+  mountainTwo = new Mountain(500, 450, 220, 235);
+  mountainThree = new Mountain(200, 400, 235, 245);
+  //call Ocean object
+  oceanView = new Ocean();
 }
 
 function draw() {
+  //first time the mouse is clicked
   if(num == 1) {
   frameRate(50);
+  //sky
   background(164, 211, 247);
-  mountain(0, 450, 220, 235);
-  mountain(500, 450, 220, 235);
-  mountain(200, 400, 235, 245);
+  //display the three mountains
+  mountainOne.display();
+  mountainTwo.display();
+  mountainThree.display();
+  //draw the sun at the top left corner of the window
   fill(255, 255, 155);
   ellipse(70, 70, 60, 60);
+
+  //display the clouds
   clouds(xpos, 210);
   clouds(xposTwo, 230);
+  //move clouds slowly to towards the right side of the screen
   xpos = xpos + cloudSpeed;
   xposTwo = xposTwo + cloudSpeed;
   
+  //when clouds move out of window, respawn another cloud
   if(xpos > width) {
     xpos = -200;
   }
@@ -33,61 +53,31 @@ function draw() {
   }
   }
   
+  //second time mouse is clicked
   if(num == 2) {
-    //background(175, 217, 239);
-    //sky();
+    //display the sky
     fill(175, 217, 239);
     noStroke();
     rect(0, 0, 800, 500);
+    //display the sun
     fill(249, 224, 160);
     noStroke();
     ellipse(width/2, 500, 325, 325);
-    ocean();
-    shimmer();
-    shimmer();
-    shimmer();
-    shimmer();
-    shimmer();
-    shimmer();
-    shimmer();
-    
+    //display the ocean
+    oceanView.display();
+    //add shimmer to ocean, several to add a more shimmer effect
+    oceanView.shimmer();
+    oceanView.shimmer();
+    oceanView.shimmer();
+    oceanView.shimmer();
+    oceanView.shimmer();
+    oceanView.shimmer();
+    oceanView.shimmer();
+    //display birds and have them move 
     birdMove();
   }
 }
 
-function mountain(x, y, shadowColor, peakColor) {
-  //peak of mountain
-  fill(peakColor);
-  noStroke();
-  beginShape();
-  vertex(x, y);
-  vertex(x + 155, y - 300);
-  vertex(x + 290, y - 20);
-  vertex(x + 290, y + 50);
-  vertex(x, y);
-  endShape();
-  //mountain
-  fill(shadowColor);
-  noStroke();
-  beginShape();
-  vertex(x - 200, y + 400);
-  vertex(x, y);
-  vertex(x + 25, y - 40);
-  vertex(x + 40, y - 10);
-  vertex(x + 65, y - 90);
-  vertex(x + 80, y - 50);
-  vertex(x + 120, y - 150);
-  vertex(x + 145, y - 110);
-  vertex(x + 155, y - 130);
-  vertex(x + 190, y - 60);
-  vertex(x + 220, y - 100);
-  vertex(x + 280, y + 10);
-  vertex(x + 290, y - 20);
-  vertex(x + 450, y + 400);
-  vertex(x, y + 400);
-  vertex(x - 200, y + 400);
-  endShape();
-}
 
 function clouds(cloudPos, cloudOpacity) {
   //default of x is 10
@@ -111,28 +101,6 @@ function clouds(cloudPos, cloudOpacity) {
   endShape();
 }
 
-function ocean() {
-  fill(95, 140, 211);
-  noStroke();
-  rect(0, 500, 800, 300);
-  //shimmer, create randomly generated ellipses at certain locations, u increases while w decreases
-}
-
-function shimmer() {
-  frameRate(5);
-  let u = 505;
-  let w = 350;
-  while(u < 750) {
-  if(w > 0) {
-  fill(139, 184, 255, random(5, 30));
-  //fill(255, random(25, 50));
-  noStroke();
-  ellipse(width/2, u, random(w - 150, w + 150), 10, 175);
-  w -= 10;
-  }
-  u += 10;
-  }
-}
 
 function bird(xBird, yBird) {
   //default for xBird and yBird is 30
