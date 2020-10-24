@@ -1,4 +1,3 @@
-let cloudSpeed = 1;
 let num = 1;
 let birdSpeed = 10;
 let birdDirection = 1;
@@ -9,18 +8,24 @@ let mountainTwo;
 let mountainThree;
 //Ocean object
 let oceanView;
+//Cloud objects
+let cloudOne;
+let cloudTwo;
 
 function setup() {
   createCanvas(800, 800);
   //initiate variables for clouds
   xpos = 10;
   xposTwo = 400;
-  //call objects, three mountains at different positions
+  //call Mountain bjects, three mountains at different positions
   mountainOne = new Mountain(0, 450, 220, 235);
   mountainTwo = new Mountain(500, 450, 220, 235);
   mountainThree = new Mountain(200, 400, 235, 245);
   //call Ocean object
   oceanView = new Ocean();
+  //call Cloud objects, two clouds at different loacations
+  cloudOne = new Cloud(xpos, 210);
+  cloudTwo = new Cloud(xposTwo, 230);
 }
 
 function draw() {
@@ -38,19 +43,12 @@ function draw() {
   ellipse(70, 70, 60, 60);
 
   //display the clouds
-  clouds(xpos, 210);
-  clouds(xposTwo, 230);
+  cloudOne.display();
+  cloudTwo.display();
   //move clouds slowly to towards the right side of the screen
-  xpos = xpos + cloudSpeed;
-  xposTwo = xposTwo + cloudSpeed;
+  cloudOne.move();
+  cloudTwo.move();
   
-  //when clouds move out of window, respawn another cloud
-  if(xpos > width) {
-    xpos = -200;
-  }
-  else if(xposTwo > width) {
-    xposTwo = -200;
-  }
   }
   
   //second time mouse is clicked
@@ -79,29 +77,7 @@ function draw() {
 }
 
 
-function clouds(cloudPos, cloudOpacity) {
-  //default of x is 10
-  fill(255, 255, 255, cloudOpacity);
-  stroke(255, 255, 255, cloudOpacity);
-  strokeWeight(20);
-  strokeJoin(ROUND);
-  beginShape();
-  vertex(cloudPos, 150);
-  vertex(cloudPos + 10, 135);
-  vertex(cloudPos + 25, 140);
-  vertex(cloudPos + 45, 120);
-  vertex(cloudPos + 65, 130);
-  vertex(cloudPos + 90, 105);
-  vertex(cloudPos + 115, 130);
-  vertex(cloudPos + 140, 125);
-  vertex(cloudPos + 160, 140);
-  vertex(cloudPos + 180, 135);
-  vertex(cloudPos + 200, 150);
-  vertex(cloudPos, 150);
-  endShape();
-}
-
-
+//display one bird
 function bird(xBird, yBird) {
   //default for xBird and yBird is 30
   stroke(0);
@@ -111,6 +87,7 @@ function bird(xBird, yBird) {
   line(xBird + 10, yBird + 10, xBird, yBird + 20);
 }
 
+//display a flock of birds
 function birdFlock() {
   for(let j = 30; j <= 200; j += 35) {
     for(let i = 30; i <= j; i += 35) {
@@ -119,6 +96,7 @@ function birdFlock() {
   }
 }
 
+//have the birds move to the right, slightly moving downwards
 function birdMove() {
   push();
   translate(birdSpeed, birdDirection);
@@ -127,6 +105,7 @@ function birdMove() {
   birdSpeed += 5;
   birdDirection += 0.8;
   pop();
+  //loop bird moving
   if(birdSpeed > 800) {
     birdSpeed = -150;
     birdDirection = 0;
@@ -134,9 +113,10 @@ function birdMove() {
   
 }
 
+//when mouse is pressed num increases by 1 and resets after 3 times
 function mousePressed() {
   num++;
-  if (num > 2) {
+  if (num > 3) {
     num = 1;
   }
 }
