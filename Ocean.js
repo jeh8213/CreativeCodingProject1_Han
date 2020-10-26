@@ -18,7 +18,7 @@ shimmer() {
 frameRate(5);
   while(this.u < 750) {
   if(this.w > 0) {
-  fill(139, 184, 255, random(5, 30));
+  fill(255, random(5, 10));
   //fill(255, random(25, 50));
   noStroke();
   ellipse(width/2, this.u, random(this.w - 150, this.w + 150), 10, 175);

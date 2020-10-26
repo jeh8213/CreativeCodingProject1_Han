@@ -1,6 +1,12 @@
-let num = 1;
-let birdSpeed = 10;
-let birdDirection = 1;
+num = 1;
+birdSpeed = 10;
+birdDirection = 1;
+
+//create an array for the stars in the sky
+var stars = new Array (251);
+
+//vectors for the shooting star
+var position, velocity;
 
 //Mountain objects
 let mountainOne;
@@ -12,22 +18,39 @@ let oceanView;
 let cloudOne;
 let cloudTwo;
 
+
+//SETUP
 function setup() {
   createCanvas(800, 800);
+
   //initiate variables for clouds
   xpos = 10;
   xposTwo = 400;
+
   //call Mountain bjects, three mountains at different positions
   mountainOne = new Mountain(0, 450, 220, 235);
   mountainTwo = new Mountain(500, 450, 220, 235);
   mountainThree = new Mountain(200, 400, 235, 245);
+
   //call Ocean object
   oceanView = new Ocean();
+
   //call Cloud objects, two clouds at different loacations
   cloudOne = new Cloud(xpos, 210);
   cloudTwo = new Cloud(xposTwo, 230);
+
+  //insert randomized values in the array for the positions of the stars
+  for(let s = 0; s < stars.length; s++) {
+    stars[s] = random(800);
+  }
+
+  //create vectors for the position and velocity of shooting stars
+  position = createVector(200, 500);
+  velocity = createVector(1, -1);
 }
 
+
+//DRAW
 function draw() {
   //first time the mouse is clicked
   if(num == 1) {
@@ -74,6 +97,20 @@ function draw() {
     //display birds and have them move 
     birdMove();
   }
+
+  //third time mouse is clicked
+  if(num == 3) {
+    //change the frame rate so the shooting star moves faster
+    frameRate(60);
+
+    //displays night sky
+    background(11, 14, 40);
+
+    //displays the entire starry night sky with the shooting star
+    shootingStar();
+    moon();
+    starrySky();
+  }
 }
 
 
@@ -112,6 +149,56 @@ function birdMove() {
   }
   
 }
+
+//display the stars in the sky
+function starrySky() {
+  fill(255);
+  noStroke();
+  for(let b = 0; b < stars.length; b += 2) {
+  ellipse(stars[b], stars[b + 1], 2, 2);
+  }
+}
+
+//display the moon in the sky
+function moon() {
+  fill(200);
+  noStroke();
+  ellipse(200, 200, 125, 125);
+  fill(11, 14, 40);
+  noStroke();
+  ellipse(235, 190, 125, 125);
+}
+
+//displays the moving shooting star using vectors
+function shootingStar() {
+  //star moves and leaves a trace behind
+  position.add(velocity);
+  fill(255);
+  noStroke();
+  ellipse(position.x, position.y, 10, 10);
+  fill(255, 200);
+  ellipse(position.x - 2, position.y + 2, 10, 10);
+  fill(255, 150);
+  ellipse(position.x - 4, position.y + 4, 10, 10);
+  fill(255, 100);
+  ellipse(position.x - 6, position.y + 6, 10, 10);
+  fill(255, 50);
+  ellipse(position.x - 8, position.y + 8, 10, 10);
+  fill(255, 25);
+  ellipse(position.x - 10, position.y + 10, 10, 10);
+  fill(255, 10);
+  ellipse(position.x - 12, position.y + 12, 10, 10);
+  
+  //reset the postiion of the shooting star after it moves out of frame
+  if(position.x > 800) {
+    position.x = -20;
+    position.y = 700;
+  }
+  //display the moon and stars on top 
+  //moon();
+  //starrySky();
+}
+
 
 //when mouse is pressed num increases by 1 and resets after 3 times
 function mousePressed() {
