@@ -1,13 +1,13 @@
 //initiate variables
-num = 1;
-birdSpeed = 10;
-birdDirection = 1;
+let num = 1;
+let birdSpeed = 10;
+let birdDirection = 1;
 
 //create an array for the stars in the sky
-var stars = new Array (251);
+let stars = new Array (250);
 
 //vectors for the shooting star
-var position, velocity;
+let position, velocity;
 
 //Mountain objects
 let mountainOne;
@@ -155,7 +155,7 @@ function birdMove() {
 function starrySky() {
   fill(255);
   noStroke();
-  for(let b = 0; b < stars.length; b += 2) {
+  for(let b = 0; b < 250; b += 2) {
   ellipse(stars[b], stars[b + 1], 2, 2);
   }
 }
