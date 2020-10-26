@@ -1,3 +1,4 @@
+//initiate variables
 num = 1;
 birdSpeed = 10;
 birdDirection = 1;
