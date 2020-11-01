@@ -4,7 +4,7 @@ let birdSpeed = 10;
 let birdDirection = 1;
 
 //create an array for the stars in the sky
-let stars = new Array (250);
+let stars = new Array (200);
 
 //vectors for the shooting star
 let position, velocity;
@@ -78,15 +78,37 @@ function draw() {
   //second time mouse is clicked
   if(num == 2) {
     //display the sky
-    fill(175, 217, 239);
+    let c1 = color(175, 217, 239);
+    let c2 = color(247, 99, 25);
+  
+    for (let skyX = 0; skyX < 60; skyX++) {
+    
+    let skyY = 6 * skyX; 
+    
     noStroke();
-    rect(0, 0, 800, 500);
+    fill(lerpColor(c1, c2, 0.01 * skyX));
+    rect(0, skyY, width, 500);
+  } 
+
     //display the sun
-    fill(249, 224, 160);
+    fill(239, 220, 168);
     noStroke();
     ellipse(width/2, 500, 325, 325);
+
     //display the ocean
-    oceanView.display();
+    let c3 = color(226, 113, 73);
+    let c4 = color(72, 151, 211);
+  
+    for (let skyXtwo = 0; skyXtwo < 60; skyXtwo++) {
+    
+    let skyYtwo = 6 * skyXtwo; 
+    
+    noStroke();
+    fill(lerpColor(c3, c4, 0.015 * skyXtwo));
+    rect(0, skyYtwo + 500, width, 300);
+  } 
+
+    //oceanView.display();
     //add shimmer to ocean, several to add a more shimmer effect
     oceanView.shimmer();
     oceanView.shimmer();
@@ -109,7 +131,7 @@ function draw() {
 
     //displays the entire starry night sky with the shooting star
     shootingStar();
-    moon();
+    moon(200);
     starrySky();
   }
 }
@@ -127,9 +149,18 @@ function bird(xBird, yBird) {
 
 //display a flock of birds
 function birdFlock() {
+  //display the birds as an isosceles triangle
   for(let j = 30; j <= 200; j += 35) {
     for(let i = 30; i <= j; i += 35) {
-      bird(i, j);
+      if(j < 205 && i == 30) {
+        bird(i, j);
+      }
+      if(j < 170 && i == 65) {
+         bird(i, j);
+      }
+      if(j < 135 && i == 100) {
+        bird(i, j);
+      }
     }
   }
 }
@@ -153,25 +184,31 @@ function birdMove() {
 
 //display the stars in the sky
 function starrySky() {
+  //frameRate(6);
+
   fill(255);
-  noStroke();
-  for(let b = 0; b < 250; b += 2) {
+  for(let b = 0; b < 200; b += 2) {
+
+  stroke(255, random(0, 255));
+  strokeWeight(0.75);
   ellipse(stars[b], stars[b + 1], 2, 2);
   }
 }
 
 //display the moon in the sky
-function moon() {
+function moon(moonX) {
+  //let moonX = 200;
   fill(200);
   noStroke();
-  ellipse(200, 200, 125, 125);
+  ellipse(moonX, moonX, 125, 125);
   fill(11, 14, 40);
   noStroke();
-  ellipse(235, 190, 125, 125);
+  ellipse(moonX + 35, moonX - 10, 125, 125);
 }
 
 //displays the moving shooting star using vectors
 function shootingStar() {
+  //frameRate(30);
   //star moves and leaves a trace behind
   position.add(velocity);
   fill(255);
